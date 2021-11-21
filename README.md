@@ -94,15 +94,15 @@ Below we list these programs and the conditions to trigger each bomb.
 |                               | toy_eh_cp.cpp           | data propagation via exception handling (expected argv[1][0]: '7')    | Wrong answer (We cannot handle try-throw-catch normally)          |
 |                               | div0_eh_cp.cpp          | raise an exceptions when divided by 0 (expected argv[1][0]: '7')      | Wrong answer (We cannot handle try-throw-catch normally)          |
 |                               | file_eh_cp.cpp          | expected argv[1]: an existed file                                     | Timeout (We cannot handle try-throw-catch normally)               |
-| Symbolic Memory               | stackarray_sm_l1.c      | if stdin points to an array element (expected argv[1][0]: '4')        | Compiled                                                          |
-|                               | malloc_sm_l1.c          | allocate memory with malloc (expected argv[1][0]: '7')                | Compiled                                                          |
-|                               | realloc_sm_l1.c         | allocate memory with realloc (expected argv[1][0]: '7')               | Compiled                                                          |
-|                               | vector_sm_l1.cpp        | with std::vector (expected argv[1][0]: '7')                           | Compiled                                                          |
-|                               | list_sm_l1.cpp          | with std::list (expected argv[1][0]: '7')                             | Compiled                                                          |
-|                               | stackarray_sm_l2.c      | two arrays (expected argv[1][0]: '2')                                 | Compiled                                                          |
-|                               | stackarray_sm_ln.c      | several levels of arrays (expected argv[1][0]: '6')                   | Compiled                                                          |
-|                               | stackoutofbound_sm_l2.c | if array index equal array size (expected argv[1][0]: '7')            | Compiled                                                          |
-|                               | heapoutofbound_sm_l2.c  | if array index equals array size (expected argv[1][0]: ':')           | Compiled                                                          |
+| Symbolic Memory               | stackarray_sm_l1.c      | if stdin points to an array element (expected argv[1][0]: '4')        | Partly Pass (memory modeling imprecised)                          |
+|                               | malloc_sm_l1.c          | allocate memory with malloc (expected argv[1][0]: '7')                | Partly Pass (memory modeling imprecised)                          |
+|                               | realloc_sm_l1.c         | allocate memory with realloc (expected argv[1][0]: '7')               | Partly Pass (memory modeling imprecised)                          |
+|                               | vector_sm_l1.cpp        | with std::vector (expected argv[1][0]: '7')                           | Fail (not support C++ right now)                                  |
+|                               | list_sm_l1.cpp          | with std::list (expected argv[1][0]: '7')                             | Fail (not support C++ right now)                                  |
+|                               | stackarray_sm_l2.c      | two arrays (expected argv[1][0]: '2')                                 | Partly Pass (memory modeling imprecised)                          |
+|                               | stackarray_sm_ln.c      | several levels of arrays (expected argv[1][0]: '6')                   | Partly Pass (memory modeling imprecised)                          |
+|                               | stackoutofbound_sm_l2.c | if array index equal array size (expected argv[1][0]: '7')            | Partly Pass (memory modeling imprecised)                          |
+|                               | heapoutofbound_sm_l2.c  | if array index equals array size (expected argv[1][0]: ':')           | Partly Pass (memory modeling imprecised)                          |
 | Parallel Program              | 2thread_pp_l1.c         | two-thread program (expected argv[1][0]: '7')                         | Inapplicable (Wasm does not support thread)                       |
 |                               | forkpipe_pp_l1.c        | two-process program with pipe (expected argv[1][0]: '7')              | Inapplicable (Wasm does not support thread)                       |
 |                               | forkshm_pp_l1.c         | two-process program with shared memory (expected argv[1][0]: '7')     | Inapplicable (Wasm does not support thread)                       |
@@ -119,10 +119,10 @@ Below we list these programs and the conditions to trigger each bomb.
 |                               | vectorjmp_sj_l2.c       | a more complex case with an vector (expected argv[1][0]: '7')         | Inapplicable (Wasm does not support goto)                         |
 | Data Overflow                 | plus_do.c               | a + 2147483640 < 0 && a > 0 (expected argv[1][0]: '8')                | Pass                                                              |
 |                               | multiply_do.c           | 254748364 * a < 0 && a > 0 (expected argv[1][0]: '9')                 | Pass                                                              |
-| Buffer Overflow               | stacknocrash_bo_l1.c    | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | Compiled                                                          |
-|                               | stack_bo_l1.c           | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | Compiled                                                          |
-|                               | stack_bo_l2.c           | expected stdin: TO FIGURE OUT                                         | Compiled                                                          |
-|                               | heap_bo_l1.c            | expected stdin: TO FIGURE OUT                                         | Compiled                                                          |
+| Buffer Overflow               | stacknocrash_bo_l1.c    | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | TODO (`strlen` not support symbol string)                         |
+|                               | stack_bo_l1.c           | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | TODO (`strcpy` not support symbol string)                         |
+|                               | stack_bo_l2.c           | expected stdin: TO FIGURE OUT                                         | TODO (`strcpy` not support symbol string)                         |
+|                               | heap_bo_l1.c            | expected stdin: TO FIGURE OUT                                         | TODO (`strcpy` not support symbol string)                         |
 | External Function Call        | printint_ef_l1.c        | expected argv[1][0]: '7'                                              | Pass                                                              |
 |                               | printfloat_ef_l1.c      | expected argv[1][0]: '7'                                              | Pass                                                              |
 |                               | atoi_ef_l2.c            | expected argv[1][0]: '7'                                              | Pass                                                              |
