@@ -1,6 +1,6 @@
 {
     "general": {
-        "CC": "clang"
+        "CC": "emcc"
     },
 
     "crypto_lib": {
@@ -9,7 +9,7 @@
             "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&FILENAME}.o {!FILENAME}",
+            "clang -c -I{INCLUDE} -Wall -fpic -g -o tmp/{&FILENAME}.o {!FILENAME}",
             "ar cr build/lib{OUTPUT}.a {!INPUTS} #BATCH"
         ],
         "dependencies": {
@@ -32,7 +32,7 @@
             "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -c -Wall -Werror -fpic -o tmp/{&OUTPUT}.o {!FILENAME} #SINGLE",
+            "clang -c -I{INCLUDE} -Wall -fpic -g -o tmp/{&OUTPUT}.o {!FILENAME} #SINGLE",
             "ar cr build/lib{OUTPUT}.a {!INPUTS} #BATCH"
         ],
         "dependencies": {
@@ -54,7 +54,7 @@
             "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbuild -o build/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
+            "{CC} -I{INCLUDE} -Lbuild -g -s WASM=1 -O2 -std=c89 -o build/{&FILENAME} -xc - -lpthread -lm -lutils -lcrypto #PIPE"
         ],
         "dependencies": {
             "PATH": "src/",
@@ -68,12 +68,12 @@
     },
 
     "src_cpp": {
-        "CC": "clang++",
+        "CC": "emcc",
         "mkdir": [
             "build"
         ],
         "cmd": [
-            "{CC} -I{INCLUDE} -Lbuild -o build/{&FILENAME} -xc++ - -lpthread -lm -lutils #PIPE"
+            "{CC} -I{INCLUDE} -g -s WASM=1 -O3 -std=c++11 -Lbuild -o build/{&FILENAME} -xc++ - -lpthread -lm -lutils #PIPE"
         ],
         "dependencies": {
             "PATH": "src_cpp/",

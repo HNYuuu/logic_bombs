@@ -37,3 +37,6 @@ tmp/
 .vscode/
 .idea/
 sick/
+README.md
+*/.DS_Store
+.DS_Store
