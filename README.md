@@ -94,15 +94,15 @@ Below we list these programs and the conditions to trigger each bomb.
 |                               | toy_eh_cp.cpp           | data propagation via exception handling (expected argv[1][0]: '7')    | Wrong answer (We cannot handle try-throw-catch normally)          |
 |                               | div0_eh_cp.cpp          | raise an exceptions when divided by 0 (expected argv[1][0]: '7')      | Wrong answer (We cannot handle try-throw-catch normally)          |
 |                               | file_eh_cp.cpp          | expected argv[1]: an existed file                                     | Timeout (We cannot handle try-throw-catch normally)               |
-| Symbolic Memory               | stackarray_sm_l1.c      | if stdin points to an array element (expected argv[1][0]: '4')        | Partly Pass (memory modeling imprecised)                          |
-|                               | malloc_sm_l1.c          | allocate memory with malloc (expected argv[1][0]: '7')                | Partly Pass (memory modeling imprecised)                          |
-|                               | realloc_sm_l1.c         | allocate memory with realloc (expected argv[1][0]: '7')               | Partly Pass (memory modeling imprecised)                          |
+| Symbolic Memory               | stackarray_sm_l1.c      | if stdin points to an array element (expected argv[1][0]: '4')        | Pass                                                              |
+|                               | malloc_sm_l1.c          | allocate memory with malloc (expected argv[1][0]: '7')                | Pass                                                              |
+|                               | realloc_sm_l1.c         | allocate memory with realloc (expected argv[1][0]: '7')               | Pass                                                              |
 |                               | vector_sm_l1.cpp        | with std::vector (expected argv[1][0]: '7')                           | Fail (not support C++ right now)                                  |
 |                               | list_sm_l1.cpp          | with std::list (expected argv[1][0]: '7')                             | Fail (not support C++ right now)                                  |
-|                               | stackarray_sm_l2.c      | two arrays (expected argv[1][0]: '2')                                 | Partly Pass (memory modeling imprecised)                          |
-|                               | stackarray_sm_ln.c      | several levels of arrays (expected argv[1][0]: '6')                   | Partly Pass (memory modeling imprecised)                          |
-|                               | stackoutofbound_sm_l2.c | if array index equal array size (expected argv[1][0]: '7')            | Partly Pass (memory modeling imprecised)                          |
-|                               | heapoutofbound_sm_l2.c  | if array index equals array size (expected argv[1][0]: ':')           | Partly Pass (memory modeling imprecised)                          |
+|                               | stackarray_sm_l2.c      | two arrays (expected argv[1][0]: '2')                                 | Pass                                                              |
+|                               | stackarray_sm_ln.c      | several levels of arrays (expected argv[1][0]: '6')                   | Timeout                                                           |
+|                               | stackoutofbound_sm_l2.c | if array index equal array size (expected argv[1][0]: '7')            | Pass                                                              |
+|                               | heapoutofbound_sm_l2.c  | if array index equals array size (expected argv[1][0]: ':')           | Pass                                                              |
 | Parallel Program              | 2thread_pp_l1.c         | two-thread program (expected argv[1][0]: '7')                         | Inapplicable (Wasm does not support thread)                       |
 |                               | forkpipe_pp_l1.c        | two-process program with pipe (expected argv[1][0]: '7')              | Inapplicable (Wasm does not support thread)                       |
 |                               | forkshm_pp_l1.c         | two-process program with shared memory (expected argv[1][0]: '7')     | Inapplicable (Wasm does not support thread)                       |
@@ -113,12 +113,12 @@ Below we list these programs and the conditions to trigger each bomb.
 |                               | float3_fp_l2.c          | expected argv[1]: "0.1"                                               | Pass                                                              |
 |                               | float4_fp_l2.c          | expected argv[1]: "-0.1"                                              | Pass                                                              |
 |                               | float5_fp_l2.c          | expected argv[1]: "0.41421"                                           | Pass                                                              |
-| Symbolic Jump                 | funcpointers_sj_l1.c    | call a function related to stdin (expected argv[1][0]: '5')           | Pass                                                              |
+| Symbolic Jump                 | pointers_sj_l1.c        | call a function related to stdin (expected argv[1][0]: '5')           | Pass                                                              |
 |                               | jmp_sj_l1.c             | jump to an address related to stdin (expected argv[1][0]: 'U')        | Inapplicable (Wasm does not support goto)                         |
 |                               | arrayjmp_sj_l2.c        | a more complex case with an array (expected argv[1][0]: '7')          | Inapplicable (Wasm does not support goto)                         |
 |                               | vectorjmp_sj_l2.c       | a more complex case with an vector (expected argv[1][0]: '7')         | Inapplicable (Wasm does not support goto)                         |
-| Data Overflow                 | plus_do.c               | a + 2147483640 < 0 && a > 0 (expected argv[1][0]: '8')                | Pass                                                              |
-|                               | multiply_do.c           | 254748364 * a < 0 && a > 0 (expected argv[1][0]: '9')                 | Pass                                                              |
+| Data Overflow                 | addint_to_l1.c          | a + 2147483640 < 0 && a > 0 (expected argv[1][0]: '8')                | Pass                                                              |
+|                               | multiplyint_to_l1.c     | 254748364 * a < 0 && a > 0 (expected argv[1][0]: '9')                 | Pass                                                              |
 | Buffer Overflow               | stacknocrash_bo_l1.c    | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | TODO (`strlen` not support symbol string)                         |
 |                               | stack_bo_l1.c           | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | TODO (`strcpy` not support symbol string)                         |
 |                               | stack_bo_l2.c           | expected stdin: TO FIGURE OUT                                         | TODO (`strcpy` not support symbol string)                         |
