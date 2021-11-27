@@ -119,10 +119,10 @@ Below we list these programs and the conditions to trigger each bomb.
 |                               | vectorjmp_sj_l2.c       | a more complex case with an vector (expected argv[1][0]: '7')         | Inapplicable (Wasm does not support goto)                         |
 | Data Overflow                 | addint_to_l1.c          | a + 2147483640 < 0 && a > 0 (expected argv[1][0]: '8')                | Pass                                                              |
 |                               | multiplyint_to_l1.c     | 254748364 * a < 0 && a > 0 (expected argv[1][0]: '9')                 | Pass                                                              |
-| Buffer Overflow               | stacknocrash_bo_l1.c    | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | TODO (`strlen` not support symbol string)                         |
-|                               | stack_bo_l1.c           | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | TODO (`strcpy` not support symbol string)                         |
-|                               | stack_bo_l2.c           | expected stdin: TO FIGURE OUT                                         | TODO (`strcpy` not support symbol string)                         |
-|                               | heap_bo_l1.c            | expected stdin: TO FIGURE OUT                                         | TODO (`strcpy` not support symbol string)                         |
+| Buffer Overflow               | stacknocrash_bo_l1.c    | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | pass                                                              |
+|                               | stack_bo_l1.c           | expected stdin: \`python -c 'print "AAAAAAAA\x01\x00\x00\x00"'\`      | pass                                                              |
+|                               | stack_bo_l2.c           | expected stdin: TO FIGURE OUT                                         | Fail (the pointer cannot be negative)                             |
+|                               | heap_bo_l1.c            | expected stdin: TO FIGURE OUT                                         | Fail (Guess due to `free`, not sure)                         |
 | External Function Call        | printint_ef_l1.c        | expected argv[1][0]: '7'                                              | Pass                                                              |
 |                               | printfloat_ef_l1.c      | expected argv[1][0]: '7'                                              | Pass                                                              |
 |                               | atoi_ef_l2.c            | expected argv[1][0]: '7'                                              | Pass                                                              |
